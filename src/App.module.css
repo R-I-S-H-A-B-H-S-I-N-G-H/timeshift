@@ -1,0 +1,71 @@
+.dateContainer {
+	background-color: whitesmoke;
+	padding: 1rem;
+	margin: 1rem;
+	border-radius: 0.3rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border: solid 2px lightblue;
+	position: relative;
+}
+.date {
+	/* margin: 0 0.8rem; */
+	display: flex;
+	/* background-color: lightgray; */
+	width: 100%;
+	justify-content: space-between;
+	align-items: center;
+}
+.days {
+	position: absolute;
+	bottom: 5px;
+	right: 5px;
+	font-size: 0.8rem;
+	font-weight: bold;
+	color: rgb(104, 104, 104);
+}
+
+.timezone {
+	font-weight: bold;
+	font-size: 1.6rem;
+	color: rgb(57, 57, 57);
+}
+.time {
+	font-weight: 600;
+	font-size: 1.4rem;
+	color: black;
+	display: flex;
+	justify-content: space-between;
+	width: 6.5rem;
+}
+.tzOffsetNeut {
+	color: rgb(108, 108, 108);
+}
+.tzOffsetPos {
+	color: darkgreen;
+}
+
+.tzOffsetNeg {
+	color: lightcoral;
+}
+
+.deleteDate {
+	position: absolute;
+	color: gray;
+	top: 1%;
+	right: 1%;
+	font-weight: 400;
+	font-size: 1rem;
+	display: none;
+}
+.deleteDate:hover {
+	color: red;
+	cursor: pointer;
+}
+.dateContainer:hover {
+	border: solid 2px darkcyan;
+	.deleteDate {
+		display: block;
+	}
+}

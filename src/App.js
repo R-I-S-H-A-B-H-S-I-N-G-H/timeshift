@@ -1,28 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DateUtil } from "./util/timeUtil/DateUtil";
 import Slider from "./Components/Slider/Slider";
 import { DropDown } from "./Components/Dropdown/DropDown";
+import style from "./App.module.css";
+import { toLocalstore } from "./util/Util";
 
 export default function App(params) {
 	const [epoch, setEpoch] = useState(Date.now());
-	const UTCDATE = new DateUtil(epoch, "UTC");
-	const ISTDATE = DateUtil.fromUTCDate(UTCDATE, "IST");
-	const [dateList, setDateList] = useState([UTCDATE]);
+	const [dateList, setDateList] = useState([new DateUtil(epoch, "UTC")]);
 
 	function tzSelectHandler(timezone) {
-		console.log(timezone);
-		setDateList((prev) => [...prev, DateUtil.fromUTCDate(UTCDATE, timezone)]);
+		if (!timezone) return;
+		for (const dateObj of dateList) if (dateObj.getTimezone() === timezone) return;
+
+		const tzEpoc = DateUtil.fromUTC(epoch, timezone);
+		updateDateList([...dateList, new DateUtil(tzEpoc, timezone)]);
+	}
+
+	function updateDateList(newDateList) {
+		toLocalstore("dateList", newDateList);
+		setDateList(newDateList);
 	}
 
 	function updateEpoch(utcEpoch) {
 		setEpoch(utcEpoch);
-		setDateList((prevList) =>
-			prevList.map((ele) => {
-				const updatedEpoch = DateUtil.fromUTC(utcEpoch, ele.getTimezone());
-				ele.setEpoch(updatedEpoch);
-				return ele;
-			}),
-		);
+		const newDateList = dateList.map((ele) => {
+			const updatedEpoch = DateUtil.fromUTC(utcEpoch, ele.getTimezone());
+			ele.setEpoch(updatedEpoch);
+			return ele;
+		});
+		updateDateList(newDateList);
+	}
+
+	function deleteDate(date) {
+		const newDateList = dateList.filter((ele) => ele != date);
+		updateDateList(newDateList);
 	}
 
 	return (
@@ -34,8 +46,24 @@ export default function App(params) {
 
 				{dateList.map((date) => {
 					return (
-						<div>
-							DATE IN {date.getTimezone()} :: {date.format("dd DAY , MON, YYYY  hh:mm:ss")} offset : {DateUtil.getOffsetHr(date.getTimezone())}
+						<div className={style.dateContainer}>
+							<div className={style.date}>
+								<div className={style.timezone}>{date.getTimezone()}</div>
+								<div className={style.time}>
+									{date.getHour()} : {date.getMinutes()}
+									<div className={DateUtil.getOffsetHr(date.getTimezone()) == 0 ? style.tzOffsetNeut : DateUtil.getOffsetHr(date.getTimezone()) > 0 ? style.tzOffsetPos : style.tzOffsetNeg}>
+										{DateUtil.getOffsetHr(date.getTimezone()) >= 0 ? "+" : ""}
+										{DateUtil.getOffsetHr(date.getTimezone())}
+									</div>
+								</div>
+								<div className={style.days}>
+									{date.getDate()}th {date.getMonthName()} {date.getYear()}
+								</div>
+							</div>
+
+							<div className={style.deleteDate} onClick={() => deleteDate(date)}>
+								x
+							</div>
 						</div>
 					);
 				})}

@@ -61,6 +61,10 @@ export class DateUtil {
 		return DateUtil.MONTH[month - 1];
 	}
 
+	static initiate(epoch, timezone) {
+		return new DateUtil(epoch, timezone);
+	}
+
 	static fromUTC(epoch, toTimezone) {
 		if (typeof epoch !== "number") throw new Error("EPOCH SHOULD BE A NUMBER");
 		if (!toTimezone) throw new Error("INVALID TIMEZONE");
@@ -84,7 +88,6 @@ export class DateUtil {
 
 	static toUTCDate(dateUtilInstance, fromTimeZone) {
 		if (!dateUtilInstance instanceof DateUtil) throw new Error("NOT INSTANCE OF DATEUTIL CALS");
-		console.log(dateUtilInstance);
 		const epoch = dateUtilInstance.getEpoch();
 		const updatedEpoch = DateUtil.toUTC(epoch, fromTimeZone);
 		return new DateUtil(updatedEpoch, fromTimeZone);
