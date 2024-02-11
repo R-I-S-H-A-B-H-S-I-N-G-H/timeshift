@@ -2,7 +2,7 @@ import { useState } from "react";
 import style from "./DropDown.module.css";
 export function DropDown(props) {
 	const { list = [], onSelect = () => {} } = props;
-	const [listClickStatus, setListClickStatus] = useState(true);
+	const [listClickStatus, setListClickStatus] = useState(false);
 	const [filter, setFiler] = useState("");
 
 	function listClickHandler(ele) {
