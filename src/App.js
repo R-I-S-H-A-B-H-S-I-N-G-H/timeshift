@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { DateUtil } from "./util/timeUtil/DateUtil";
 import Slider from "./Components/Slider/Slider";
 import { DropDown } from "./Components/Dropdown/DropDown";
@@ -50,7 +50,7 @@ export default function App(params) {
 							<div className={style.date}>
 								<div className={style.timezone}>{date.getTimezone()}</div>
 								<div className={style.time}>
-									{date.getHour()} : {date.getMinutes()}
+									{date.getHour(12)} : {date.getMinutes()} {date.getAmPm()}
 									<div className={DateUtil.getOffsetHr(date.getTimezone()) == 0 ? style.tzOffsetNeut : DateUtil.getOffsetHr(date.getTimezone()) > 0 ? style.tzOffsetPos : style.tzOffsetNeg}>
 										{DateUtil.getOffsetHr(date.getTimezone()) >= 0 ? "+" : ""}
 										{DateUtil.getOffsetHr(date.getTimezone())}

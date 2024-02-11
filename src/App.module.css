@@ -37,17 +37,21 @@
 	color: black;
 	display: flex;
 	justify-content: space-between;
-	width: 6.5rem;
+	width: max-content;
+	padding: 0.2rem;
 }
 .tzOffsetNeut {
 	color: rgb(108, 108, 108);
+	margin: 0 0.5rem;
 }
 .tzOffsetPos {
 	color: darkgreen;
+	margin: 0 0.5rem;
 }
 
 .tzOffsetNeg {
 	color: lightcoral;
+	margin: 0 0.5rem;
 }
 
 .deleteDate {

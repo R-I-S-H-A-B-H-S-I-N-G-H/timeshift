@@ -26,8 +26,15 @@ export class DateUtil {
 		const mod = Math.pow(10, size);
 		return this.#date.getUTCFullYear() % mod;
 	}
-	getHour() {
-		return this.#date.getUTCHours();
+
+	getHour(type = 24) {
+		if (type === 24) return this.#date.getUTCHours();
+		return this.#date.getUTCHours() % 12;
+	}
+
+	getAmPm() {
+		const curHr = this.getHour();
+		return curHr < 12 ? "AM" : "PM";
 	}
 
 	getMinutes() {
