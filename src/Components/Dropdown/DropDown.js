@@ -2,7 +2,7 @@ import { useState } from "react";
 import style from "./DropDown.module.css";
 export function DropDown(props) {
 	const { list = [], onSelect = () => {} } = props;
-	const [listClickStatus, setListClickStatus] = useState(false);
+	const [listClickStatus, setListClickStatus] = useState(true);
 	const [filter, setFiler] = useState("");
 
 	function listClickHandler(ele) {
@@ -11,14 +11,14 @@ export function DropDown(props) {
 	}
 	return (
 		<div className={style.dropdown}>
-			<label onClick={() => setListClickStatus((prev) => !prev)} className={style.dropdownbtn}>
+			<label className={style.dropdownbtn} onClick={() => setListClickStatus((prev) => !prev)}>
 				<span>TIME ZONES</span>
 				<span className={style.arrow}></span>
 			</label>
 
 			<div className={!!listClickStatus ? style.listshow : style.listhide} role="menu">
-				<div>
-					<input name="search" autoComplete="off" onChange={(e) => setFiler(e.target.value)} placeholder="search timezones" />
+				<div className={style.inputContainer}>
+					<input className={style.inputbox} name="search" autoComplete="off" onChange={(e) => setFiler(e.target.value)} placeholder="search timezones" />
 				</div>
 				{list
 					.filter((tz) => tz.toUpperCase().includes(filter.toUpperCase()))

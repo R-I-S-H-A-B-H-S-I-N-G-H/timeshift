@@ -61,9 +61,9 @@ export default function App(params) {
 	}
 
 	return (
-		<div>
+		<div style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
 			<h2>The current Unix epoch time is {curEpoch}</h2>
-			<div>
+			<div style={{ flex: "1", width: "80%" }}>
 				<DropDown list={Object.keys(DateUtil.TIMEZONE_ID_TO_OFFSET)} onSelect={tzSelectHandler} />
 
 				{dateList.map((date) => {
