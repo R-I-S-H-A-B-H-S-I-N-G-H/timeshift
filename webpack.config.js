@@ -1,6 +1,9 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
-module.exports = {
+const TerserPlugin = require("terser-webpack-plugin");
+
+const devConfig = {
+	mode: "development",
 	entry: {
 		main: "./src/index.js",
 		DateUtil: "./src/util/timeUtil/DateUtil.js",
@@ -31,4 +34,27 @@ module.exports = {
 			filename: "./index.html",
 		}),
 	],
+};
+
+const prodConfig = {
+	...devConfig,
+	mode: "production",
+	optimization: {
+		minimize: true,
+		minimizer: [
+			new TerserPlugin({
+				parallel: true,
+			}),
+		],
+	},
+};
+
+module.exports = (env) => {
+	const isProd = env?.production ? "production" : "development";
+	switch (isProd) {
+		case "production":
+			return prodConfig;
+		default:
+			return devConfig;
+	}
 };
