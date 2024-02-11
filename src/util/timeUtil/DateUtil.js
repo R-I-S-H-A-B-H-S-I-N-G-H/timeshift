@@ -1,4 +1,4 @@
-export class DateUtil {
+class DateUtil {
 	#timezone;
 	#date;
 
@@ -780,3 +780,4 @@ export class DateUtil {
 
 	static MONTH = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 }
+window.DateUtil = DateUtil;
