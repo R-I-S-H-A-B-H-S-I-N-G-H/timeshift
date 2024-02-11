@@ -68,6 +68,22 @@ class DateUtil {
 		return DateUtil.MONTH[month - 1];
 	}
 
+	format(formatStr) {
+		if (typeof formatStr !== "string") throw new Error("INVALID DATE FORMAT TYPE");
+		const { DAY, HOUR, MILI, MINUTE, MONTH, SECOND, YEAR, DAY_NAME, MONTH_NAME, YEAR2 } = DateUtil.DATE_FORMAT_ENUM;
+		return formatStr
+			.replace(DAY, this.getDate())
+			.replace(MONTH, this.getMonth())
+			.replace(YEAR, this.getYear())
+			.replace(YEAR2, this.getYear(2))
+			.replace(HOUR, this.getHour())
+			.replace(MINUTE, this.getMinutes())
+			.replace(SECOND, this.getSeconds())
+			.replace(MILI, this.getMilliseconds())
+			.replace(DAY_NAME, this.getDayName())
+			.replace(MONTH_NAME, this.getMonthName());
+	}
+
 	static initiate(epoch, timezone) {
 		return new DateUtil(epoch, timezone);
 	}
@@ -120,24 +136,10 @@ class DateUtil {
 		return DateUtil.getOffsetSec(_timezoneId) * 1000;
 	}
 
-	format(formatStr) {
-		if (typeof formatStr !== "string") throw new Error("INVALID DATE FORMAT TYPE");
-		const { DAY, HOUR, MILI, MINUTE, MONTH, SECOND, YEAR, DAY_NAME, MONTH_NAME, YEAR2 } = DateUtil.DATE_FORMAT_ENUM;
-		return formatStr
-			.replace(DAY, this.getDate())
-			.replace(MONTH, this.getMonth())
-			.replace(YEAR, this.getYear())
-			.replace(YEAR2, this.getYear(2))
-			.replace(HOUR, this.getHour())
-			.replace(MINUTE, this.getMinutes())
-			.replace(SECOND, this.getSeconds())
-			.replace(MILI, this.getMilliseconds())
-			.replace(DAY_NAME, this.getDayName())
-			.replace(MONTH_NAME, this.getMonthName());
-	}
-
 	static now() {
-		return new DateUtil(Date.now());
+		// return new DateUtil(Date.now());
+		let unixTimeInMilliseconds = performance.now() + performance.timeOrigin;
+		return unixTimeInMilliseconds;
 	}
 
 	static getCurrentTimeZone() {
