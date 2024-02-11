@@ -1,0 +1,21 @@
+.container {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0.8rem;
+}
+.staticText {
+	font-size: larger;
+	padding: 0.5rem;
+	text-decoration: lightcoral 4px underline;
+}
+.epoch {
+	background-color: rgb(246, 162, 162);
+	text-align: center;
+	padding: 0.5rem;
+	font-weight: 700;
+	font-size: larger;
+	border-radius: 0.4rem;
+	border: solid 3px rgb(230, 80, 30);
+}

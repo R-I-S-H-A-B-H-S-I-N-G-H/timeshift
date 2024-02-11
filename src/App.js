@@ -4,24 +4,12 @@ import { DropDown } from "./Components/Dropdown/DropDown";
 import style from "./App.module.css";
 import { toLocalstore } from "./util/Util";
 import Timeslider from "./Components/Timeslider/Timeslider";
+import Unixtimer from "./Components/UnixTimer/Unixtimer";
 
 export default function App(params) {
 	const [curEpoch, setCurEpoch] = useState(Math.trunc(Date.now() / 1000));
 	const [milli, setMilli] = useState(Date.now());
 	const [dateList, setDateList] = useState([new DateUtil(milli, "UTC")]);
-	const timeUpdateInterval = useRef(null);
-
-	useEffect(() => {
-		if (!timeUpdateInterval.current)
-			timeUpdateInterval.current = setInterval(() => {
-				setCurEpoch(Math.trunc(Date.now() / 1000));
-			}, 1000);
-
-		return () => {
-			if (timeUpdateInterval.current) clearInterval(timeUpdateInterval.current);
-			timeUpdateInterval.current = null;
-		};
-	}, []);
 
 	function tzSelectHandler(timezone) {
 		if (!timezone) return;
@@ -62,7 +50,7 @@ export default function App(params) {
 
 	return (
 		<div style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
-			<h2>The current Unix epoch time is {curEpoch}</h2>
+			<Unixtimer onUpdate={setCurEpoch} />
 			<div style={{ flex: "1", width: "80%" }}>
 				<DropDown list={Object.keys(DateUtil.TIMEZONE_ID_TO_OFFSET)} onSelect={tzSelectHandler} />
 
