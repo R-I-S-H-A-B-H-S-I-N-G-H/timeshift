@@ -53,7 +53,8 @@ module.exports = (env) => {
 	const isProd = env?.production ? "production" : "development";
 	switch (isProd) {
 		case "production":
-			return prodConfig;
+			return devConfig;
+			// return prodConfig;
 		default:
 			return devConfig;
 	}
